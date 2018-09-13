@@ -26,5 +26,18 @@ namespace CMPH_BlogProject.Controllers
 
             return View();
         }
+
+        public ActionResult Signup()
+        {
+            ViewBag.Message = "Your signup page.";
+
+            return View();
+        }
+        public ActionResult Projects()
+        {
+            ViewBag.Message = "Your projects page.";
+
+            return View();
+        }
     }
 }

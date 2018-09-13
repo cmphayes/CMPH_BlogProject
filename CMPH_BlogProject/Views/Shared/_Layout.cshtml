@@ -6,28 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Grayscale - Start Bootstrap Theme</title>
+
+    <title>Conall's Blog Site</title>
+
     <!-- Bootstrap core CSS -->
-    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
     <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
     <!-- Custom styles for this template -->
-    <link href="~/css/grayscale.min.css" rel="stylesheet">
-    @*<meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ViewBag.Title - My ASP.NET Application</title>*@
-    @*@Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")*@
+    <link href="~/css/grayscale.css" rel="stylesheet">
+
+    <link href="~/css/Custom.css" rel="stylesheet" />
 </head>
 
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+            <a class="navbar-brand js-scroll-trigger" href=@Url.Action("Index","Home")>Main Page</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
@@ -35,68 +35,56 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#about">About</a>
+                        <a class="nav-link js-scroll-trigger" href=@Url.Action("About","Home")>About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#projects">Projects</a>
+                        <a class="nav-link js-scroll-trigger" href=@Url.Action("Projects", "Home")>Projects</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#signup">Contact</a>
+                        <a class="nav-link js-scroll-trigger" href=@Url.Action("Contact", "Home")>Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Blogs", "Index", "Blogs", null, new { @class = "nav-link js-scroll-trigger" })
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href=@Url.Action("Login", "Account")>Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href=@Url.Action("Register", "Account")>Create Account</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+
+    <div class="conatiner">
+        <div class="row">
+            <hr>
+        </div>
+
     </div>
+        @RenderBody()
+    
+
     <!-- Footer -->
     <footer class="bg-black small text-center text-white-50">
         <div class="container">
             Copyright &copy; Your Website 2018
         </div>
     </footer>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>
-        </div>*@
-
+  
     <!--css-->
-
-
     <!-- Bootstrap core JavaScript -->
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    @*<script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>*@
-    @*<link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />*@
-    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
-
+  
     <!-- Plugin JavaScript -->
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for this template -->
     <script src="~/js/grayscale.min.js"></script>
-    <script src="~/vendor/fontawesome-free/js/fontawesome.min.js"></script>
-
-
-    @RenderSection("scripts", required: false)
+  
+    @RenderSection("scripts", required: false) 
 
 </body>
 </html>
