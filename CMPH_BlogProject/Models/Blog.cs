@@ -29,4 +29,9 @@ namespace CMPH_BlogProject.Models
             Comments = new HashSet<Comment>();
         }
     }
+
+
+
+
+
 }

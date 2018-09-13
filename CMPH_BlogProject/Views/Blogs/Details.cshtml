@@ -1,4 +1,5 @@
 ﻿@model CMPH_BlogProject.Models.Blog
+<div class="row"><hr /></div>
 
 @{
     ViewBag.Title = "Details";
@@ -77,6 +78,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { slug = Model.Slug }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

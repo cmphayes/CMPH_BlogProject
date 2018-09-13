@@ -21,37 +21,6 @@ namespace CMPH_BlogProject.Controllers
             return View(db.Blogs.ToList());
         }
 
-        // GET: Blogs/Details/5
-
-
-        public ActionResult Details(string slug)
-        {
-            if (String.IsNullOrWhiteSpace(slug))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Blog blogPost = db.Blogs.FirstOrDefault(p => p.Slug == slug);
-            if (blogPost == null)
-            {
-                return HttpNotFound();
-            }
-            return View(blogPost);
-        }
-
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Blog blog = db.Blogs.Find(id);
-        //    if (blog == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(blog);
-        //}
-
         // GET: Blogs/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
@@ -69,19 +38,19 @@ namespace CMPH_BlogProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var Slug = StringUtilities.URLFriendly(blog.Title);
-                if (String.IsNullOrWhiteSpace(Slug))
+                var slug = StringUtilities.URLFriendly(blog.Title);
+                if (String.IsNullOrWhiteSpace(slug))
                 {
                     ModelState.AddModelError("Title", "Invalid title");
                     return View(blog);
                 }
-                if (db.Blogs.Any(p => p.Slug == Slug))
+                if (db.Blogs.Any(p => p.Slug == slug))
                 {
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blog);
                 }
 
-                blog.Slug = Slug;
+                blog.Slug = slug;
                 blog.Created = DateTimeOffset.Now;
                 db.Blogs.Add(blog);
                 db.SaveChanges();
@@ -91,30 +60,20 @@ namespace CMPH_BlogProject.Controllers
             return View(blog);
         }
 
-
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Title,Abstract,Body,MediaURL,Published")] Blog blog)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var slug = StringUtilities.URLFriendly(blog.Title);
-        //        if(String.IsNullOrWhiteSpace(slug))
-        //        {
-        //            ModelState.AddModelError("Title", "InvalidTitle");
-        //        }
-
-
-
-        //        blog.Created = DateTimeOffset.Now;
-        //        db.Blogs.Add(blog);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(blog);
-        //}
+        // GET: Blogs/Details/5
+        public ActionResult Details(string slug)
+        {
+            if (String.IsNullOrWhiteSpace(slug))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Blog blog = db.Blogs.FirstOrDefault(p => p.Slug == slug);
+            if (blog == null)
+            {
+                return HttpNotFound();
+            }
+            return View(blog);
+        }
 
         // GET: Blogs/Edit/5
         [Authorize(Roles = "Admin")]
@@ -124,7 +83,7 @@ namespace CMPH_BlogProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Blog blog = db.Blogs.Find(slug);
+            Blog blog = db.Blogs.FirstOrDefault(p => p.Slug == slug);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -137,14 +96,33 @@ namespace CMPH_BlogProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Title,Abstract,Slug,Body,MediaURL,Published")] Blog blog)
+        public ActionResult Edit([Bind(Include = "Id,Title,Abstract,Slug,Body,Created,MediaURL,Published")] Blog blog)
         {
             if (ModelState.IsValid)
             {
+                //The Title and slug must be unique so what happens if we edit the Title and the resulting slug is already present?
+
+                var slug = StringUtilities.URLFriendly(blog.Title);
+                
+                if (String.IsNullOrWhiteSpace(slug))
+                {
+                    ModelState.AddModelError("Title", "Invalid title");
+                    return View(blog);
+                }
+                if (blog.Slug != slug && db.Blogs.Any(p => p.Slug == slug))
+                { 
+                    ModelState.AddModelError("Title", "The title must be unique");
+                    return View(blog);
+                }
+
+                blog.Slug = slug;
+                blog.Updated = DateTimeOffset.Now;
+
                 db.Entry(blog).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+           
             return View(blog);
         }
 
@@ -156,7 +134,7 @@ namespace CMPH_BlogProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Blog blog = db.Blogs.Find(slug);
+            Blog blog = db.Blogs.FirstOrDefault(p => p.Slug == slug);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -169,7 +147,7 @@ namespace CMPH_BlogProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string slug)
         {
-            Blog blog = db.Blogs.Find(slug);
+            Blog blog = db.Blogs.FirstOrDefault(p => p.Slug == slug);
             db.Blogs.Remove(blog);
             db.SaveChanges();
             return RedirectToAction("Index");
