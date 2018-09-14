@@ -4,83 +4,93 @@
 }
 <section id="projects" class="projects-section bg-light">
     <div class="container">
-        <h2>Index</h2>
+        <h2>Check Out Some Of My Blogs</h2>
+        <p>
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Create New", "Create")
+            }
+        </p>
 
-    <div class="row"><br /></div>
+        <div class="row"><br /></div>
 
-    <p>
-        @if (User.IsInRole("Admin"))
-        {
-            @Html.ActionLink("Create New", "Create")
-        }
-    </p>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
 
-    <div class="row"><br /></div>
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Updated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Abstract)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Body)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MediaURL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Published)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Updated)
-                </td>
-                <td>
-                    @Html.Raw(item.Title)
-                </td>
-                <td>
-                    @Html.Raw(item.Abstract)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Slug)
-                </td>
-                <td>
-                    @Html.Raw(item.Body)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MediaURL)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Published)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { slug = item.Slug }) |
-                    @Html.ActionLink("Details", "Details", new { slug = item.Slug })
-                    @Html.ActionLink("Delete", "Delete", new { slug = item.Slug })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Created)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Updated)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Abstract)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Slug)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Body)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MediaURL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Published)
+                </th>
+                <th></th>
             </tr>
-        }
 
-    </table>
-        </div>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Updated)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Title)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Abstract)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slug)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Body)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MediaURL)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Published)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { slug = item.Slug }) |
+                        @Html.ActionLink("Details", "Details", new { slug = item.Slug })
+                        @Html.ActionLink("Delete", "Delete", new { slug = item.Slug })
+                    </td>
+                </tr>
+            }
+        </table>
+        @foreach (var item in Model )
+        {
+            if (item.MediaURL != null)
+            {
+            <img class="img-responsive" src="@item.MediaURL" alt="">
+            }
+        }
+    </div>
     </section>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -34,7 +35,7 @@ namespace CMPH_BlogProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Body,MediaURL,Published")] Blog blog)
+        public ActionResult Create([Bind(Include = "Id,Title,Body,MediaURL,Published")] Blog blog, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -49,6 +50,13 @@ namespace CMPH_BlogProject.Controllers
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blog);
                 }
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
+                    blog.MediaURL = "/Uploads/" + fileName;
+                }
+
 
                 blog.Slug = slug;
                 blog.Created = DateTimeOffset.Now;
@@ -96,24 +104,31 @@ namespace CMPH_BlogProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Abstract,Slug,Body,Created,MediaURL,Published")] Blog blog)
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,MediaURL,Published")] Blog blog, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
                 //The Title and slug must be unique so what happens if we edit the Title and the resulting slug is already present?
 
                 var slug = StringUtilities.URLFriendly(blog.Title);
-                
+
                 if (String.IsNullOrWhiteSpace(slug))
                 {
                     ModelState.AddModelError("Title", "Invalid title");
                     return View(blog);
                 }
                 if (blog.Slug != slug && db.Blogs.Any(p => p.Slug == slug))
-                { 
+                {
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blog);
                 }
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
+                    blog.MediaURL = "/Uploads/" + fileName;
+                }
+
 
                 blog.Slug = slug;
                 blog.Updated = DateTimeOffset.Now;
@@ -122,7 +137,7 @@ namespace CMPH_BlogProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-           
+
             return View(blog);
         }
 
@@ -153,6 +168,17 @@ namespace CMPH_BlogProject.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Feature()
+        {
+            var random = new Random();
+            var allBlogs = db.Blogs.ToList();
+            return View(allBlogs[random.Next(0, allBlogs.Count())]);
+        }
+        public ActionResult Gallery()
+        {
+            return View(db.Blogs.ToList());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -161,5 +187,8 @@ namespace CMPH_BlogProject.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }
+

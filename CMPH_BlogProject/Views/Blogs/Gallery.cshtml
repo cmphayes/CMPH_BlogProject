@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CMPH_BlogProject.Models.Blog>
+@{
+    ViewBag.Title = "Gallery";
+}
+
+<section id="projects" class="projects-section bg-light">
+    <div class="container">
+        <h2>Check Out These Pictures</h2>
+
+        @foreach (var item in Model)
+        {
+            if (item.MediaURL != null)
+            {
+                <p>Blog Title: @Html.Raw(item.Title)</p>
+                <p>Date Posted: @Html.DisplayFor(modelItem => item.Created)</p>
+                <p>Image URL: @Html.DisplayFor(modelItem => item.MediaURL)</p>
+                <br />
+                <img class="img-responsive" src="@item.MediaURL" alt="">
+                <br />
+
+            }
+        }
+    </div>
+</section>

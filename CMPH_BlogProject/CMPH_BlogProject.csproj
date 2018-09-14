@@ -204,6 +204,7 @@
     </Compile>
     <Compile Include="Helper\RandomGenerator.cs" />
     <Compile Include="Helper\StringUtilities.cs" />
+    <Compile Include="ImageUploadValidator.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -218,6 +219,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="img\FaviconImage.png" />
     <Content Include="Scripts\Custom.css" />
     <Content Include="Scripts\grayscale.css" />
     <Content Include="Scripts\grayscale.min.css" />
@@ -232,7 +234,6 @@
     <Content Include="img\ipad.png" />
     <Content Include="Scripts\grayscale.js" />
     <Content Include="Scripts\grayscale.min.js" />
-    <Content Include="Scripts\BlogJavaScript.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -1906,9 +1907,12 @@
     <Content Include="vendor\jquery\jquery.slim.min.map" />
     <Content Include="Views\Home\Signup.cshtml" />
     <Content Include="Views\Home\Projects.cshtml" />
+    <Content Include="Views\Blogs\Feature.cshtml" />
+    <Content Include="Views\Blogs\Gallery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
