@@ -188,7 +188,11 @@ namespace CMPH_BlogProject.Controllers
             base.Dispose(disposing);
         }
 
-
+        [Authorize(Roles = "Admin")]
+        public ActionResult Unpublished()
+        {
+            return View(db.Blogs.ToList());
+        }
     }
 }
 

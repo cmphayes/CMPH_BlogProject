@@ -1,18 +1,14 @@
 ﻿@model IEnumerable<CMPH_BlogProject.Models.Blog>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Unpublished";
 }
+
 <section id="projects" class="projects-section bg-light">
     <div class="container">
-        <h2>Check Out Some Of My Blogs</h2>
-        <p>
-            @if (User.IsInRole("Admin"))
-            {
-                @Html.ActionLink("Create New", "Create")
-                <br />
-                @Html.ActionLink("View Unpublished", "Unpublished")
-            }
-        </p>
+
+        <h2>Check Out These Unpublished Blogs</h2>
+
+        <p>@Html.ActionLink("Back To Published", "Index")</p>
 
         <div class="row"><br /></div>
 
@@ -54,7 +50,7 @@
 
             @foreach (var item in Model)
             {
-                if (item.Published == true)
+                if (item.Published == false)
                 {
                     <tr>
                         <td>
@@ -92,11 +88,10 @@
         </table>
         @foreach (var item in Model)
         {
-            if (item.MediaURL != null && item.Published == true)
+            if (item.MediaURL != null && item.Published == false)
             {
-                @Html.DisplayFor(modelItem => item.Title)
                 <img class="img-responsive" src="@item.MediaURL" alt="">
             }
         }
     </div>
-    </section>
+</section>

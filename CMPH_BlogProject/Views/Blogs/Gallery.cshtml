@@ -9,7 +9,7 @@
 
         @foreach (var item in Model)
         {
-            if (item.MediaURL != null)
+            if (item.MediaURL != null && item.Published == true)
             {
                 <p>Blog Title: @Html.Raw(item.Title)</p>
                 <p>Date Posted: @Html.DisplayFor(modelItem => item.Created)</p>

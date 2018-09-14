@@ -1909,6 +1909,7 @@
     <Content Include="Views\Home\Projects.cshtml" />
     <Content Include="Views\Blogs\Feature.cshtml" />
     <Content Include="Views\Blogs\Gallery.cshtml" />
+    <Content Include="Views\Blogs\Unpublished.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
