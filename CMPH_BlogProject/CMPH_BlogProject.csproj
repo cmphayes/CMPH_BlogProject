@@ -218,9 +218,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="css\Custom.css" />
-    <Content Include="css\grayscale.css" />
-    <Content Include="css\grayscale.min.css" />
+    <Content Include="Scripts\Custom.css" />
+    <Content Include="Scripts\grayscale.css" />
+    <Content Include="Scripts\grayscale.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -230,8 +230,8 @@
     <Content Include="img\demo-image-01.jpg" />
     <Content Include="img\demo-image-02.jpg" />
     <Content Include="img\ipad.png" />
-    <Content Include="js\grayscale.js" />
-    <Content Include="js\grayscale.min.js" />
+    <Content Include="Scripts\grayscale.js" />
+    <Content Include="Scripts\grayscale.min.js" />
     <Content Include="Scripts\BlogJavaScript.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

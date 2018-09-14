@@ -18,9 +18,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="~/css/grayscale.css" rel="stylesheet">
-
-    <link href="~/css/Custom.css" rel="stylesheet" />
+    @*<link href="~/css/grayscale.css" rel="stylesheet">*@
+    <link href="~/Scripts/grayscale.css" rel="stylesheet" />
+    <link href="~/Scripts/Custom.css" rel="stylesheet" />
+    @*<link href="~/css/Custom.css" rel="stylesheet" />*@
 </head>
 
 <body>
@@ -64,8 +65,8 @@
 
     </div>
 
-        @RenderBody()
-    
+    @RenderBody()
+
 
     <!-- Footer -->
     <footer class="bg-black small text-center text-white-50">
@@ -73,19 +74,20 @@
             Copyright &copy; Your Website 2018
         </div>
     </footer>
-  
+
     <!--css-->
     <!-- Bootstrap core JavaScript -->
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  
+
     <!-- Plugin JavaScript -->
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="~/js/grayscale.min.js"></script>
-  
-    @RenderSection("scripts", required: false) 
+    @*<script src="~/js/grayscale.min.js"></script>*@
+
+    <script src="~/Scripts/grayscale.min.js"></script>
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>

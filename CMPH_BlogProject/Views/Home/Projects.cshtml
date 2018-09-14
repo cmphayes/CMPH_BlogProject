@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CMPH_BlogProject.Models.Blog>
+﻿@using CMPH_BlogProject.Helper
+@model IEnumerable<CMPH_BlogProject.Models.Blog>
 @{
     ViewBag.Title = "Projects";
 }
@@ -14,20 +15,21 @@
             </div>
             <div class="col-xl-4 col-lg-5">
                 <div class="featured-text text-center text-lg-left">
-                    @for (var item = RandomGenerator.CollectionExtension)
+                    @*@Html.Action(RandomGenerator.RandomBlog)
+                    for ()
                     {
-                        <p>
-                            @Html.DisplayFor(modelItem => item.Created)
-                        </p>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.Updated)
-                        </p>
-                        <p>
-                            @Html.Raw(item.Title)
-                        </p>
-                        <p>
-                            @Html.Raw(item.Body)
-                        </p>
+                    <p>
+                        @Html.DisplayFor(modelItem => blog.Created)
+                    </p>
+                    <p>
+                        @Html.DisplayFor(modelItem => blog.Updated)
+                    </p>
+                    <p>
+                        @Html.Raw(blog.Title)
+                    </p>
+                    <p>
+                        @Html.Raw(blog.Body)
+                    </p>*@
                     }
                 </div>
             </div>
