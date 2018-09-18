@@ -82,9 +82,13 @@
                             @Html.DisplayFor(modelItem => item.Published)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { slug = item.Slug }) |
                             @Html.ActionLink("Details", "Details", new { slug = item.Slug })
-                            @Html.ActionLink("Delete", "Delete", new { slug = item.Slug })
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { slug = item.Slug })|
+                                @Html.ActionLink("Delete", "Delete", new { slug = item.Slug })
+                            }
                         </td>
                     </tr>
                 }

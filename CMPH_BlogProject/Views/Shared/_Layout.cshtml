@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@*@model CMPH_BlogProject.Models.ApplicationUser*@
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -23,7 +24,7 @@
     <link href="~/Scripts/Custom.css" rel="stylesheet" />
     @*<link href="~/css/Custom.css" rel="stylesheet" />*@
 
-    <link rel="icon" img src="~/img/CHLogo.png" />
+    <link rel="icon" href="~/img/FaviconImage.png" />
 </head>
 
 <body>
@@ -47,14 +48,26 @@
                         <a class="nav-link js-scroll-trigger" href=@Url.Action("Feature", "Blogs")>Content</a>
                     </li>
                     @*<li class="nav-item">
-            @Html.ActionLink("Blogs", "Index", "Blogs", null, new { @class = "nav-link js-scroll-trigger" })
-        </li>*@
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href=@Url.Action("Login", "Account")>Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href=@Url.Action("Register", "Account")>Create Account</a>
-                    </li>
+                            @Html.ActionLink("Blogs", "Index", "Blogs", null, new { @class = "nav-link js-scroll-trigger" })
+                        </li>*@
+                    @if (User.IsInRole("Admin") || User.IsInRole("Mod"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger submit"  href=@Url.Action("LogOff", "Account")>Log Out</a>
+                        </li>
+                        @*<li class="nav-item">
+                            @Html.DisplayFor(model => model.FirstName)
+                        </li>*@
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href=@Url.Action("Login", "Account")>Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href=@Url.Action("Register", "Account")>Create Account</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -73,7 +86,6 @@
     <!-- Footer -->
     <footer class="bg-black small text-center text-white-50">
         <div class="container">
-            Copyright &copy; Your Website 2018
         </div>
     </footer>
 

@@ -57,7 +57,6 @@ namespace CMPH_BlogProject.Controllers
                     blog.MediaURL = "/Uploads/" + fileName;
                 }
 
-
                 blog.Slug = slug;
                 blog.Created = DateTimeOffset.Now;
                 db.Blogs.Add(blog);
@@ -132,7 +131,6 @@ namespace CMPH_BlogProject.Controllers
 
                 blog.Slug = slug;
                 blog.Updated = DateTimeOffset.Now;
-
                 db.Entry(blog).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
