@@ -166,12 +166,12 @@ namespace CMPH_BlogProject.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Feature()
-        {
-            var random = new Random();
-            var allBlogs = db.Blogs.ToList();
-            return View(allBlogs[random.Next(0, allBlogs.Count())]);
-        }
+        //public ActionResult Feature()
+        //{
+        //    var random = new Random();
+        //    var allBlogs = db.Blogs.ToList();
+        //    return View(allBlogs[random.Next(0, allBlogs.Count())]);
+        //}
         public ActionResult Gallery()
         {
             return View(db.Blogs.ToList());

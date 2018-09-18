@@ -52,9 +52,9 @@
                         </li>*@
                     @if (User.IsInRole("Admin") || User.IsInRole("Mod"))
                     {
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger submit"  href=@Url.Action("LogOff", "Account")>Log Out</a>
-                        </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Log Out", "LogOff", "Account", null, new { @class = "nav-link js-scroll-trigger" })
+                    </li>
                         @*<li class="nav-item">
                             @Html.DisplayFor(model => model.FirstName)
                         </li>*@
