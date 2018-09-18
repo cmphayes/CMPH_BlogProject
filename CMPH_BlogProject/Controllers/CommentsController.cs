@@ -15,7 +15,7 @@ namespace CMPH_BlogProject.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
-        public ActionResult Index()
+        public ActionResult Index(string slug)
         {
             var comments = db.Comments.Include(c => c.Author).Include(c => c.Blog);
             return View(comments.ToList());

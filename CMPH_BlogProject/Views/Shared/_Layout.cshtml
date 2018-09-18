@@ -1,5 +1,4 @@
-﻿@*@model CMPH_BlogProject.Models.ApplicationUser*@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 
@@ -47,17 +46,14 @@
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href=@Url.Action("Feature", "Blogs")>Content</a>
                     </li>
-                    @*<li class="nav-item">
-                            @Html.ActionLink("Blogs", "Index", "Blogs", null, new { @class = "nav-link js-scroll-trigger" })
-                        </li>*@
                     @if (User.IsInRole("Admin") || User.IsInRole("Mod"))
                     {
-                    <li class="nav-item">
-                        @Html.ActionLink("Log Out", "LogOff", "Account", null, new { @class = "nav-link js-scroll-trigger" })
-                    </li>
-                        @*<li class="nav-item">
-                            @Html.DisplayFor(model => model.FirstName)
-                        </li>*@
+                        <li class="nav-item">
+                            @Html.ActionLink("Log Out", "LogOff", "Account", null, new { @class = "nav-link js-scroll-trigger" })
+                        </li>
+                        <li class="nav-item">
+                            <div> @User.Identity.Name </div>
+                        </li>
                     }
                     else
                     {

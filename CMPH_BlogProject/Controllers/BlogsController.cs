@@ -103,7 +103,7 @@ namespace CMPH_BlogProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,MediaURL,Published")] Blog blog, HttpPostedFileBase image)
+        public ActionResult Edit([Bind(Include = "Id,Title,Created,Body,Slug,MediaURL,Published")] Blog blog, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -166,12 +166,13 @@ namespace CMPH_BlogProject.Controllers
             return RedirectToAction("Index");
         }
 
-        //public ActionResult Feature()
-        //{
-        //    var random = new Random();
-        //    var allBlogs = db.Blogs.ToList();
-        //    return View(allBlogs[random.Next(0, allBlogs.Count())]);
-        //}
+        public ActionResult feature()
+        {
+            var random = new Random();
+            var allblogs = db.Blogs.ToList();
+            return View(allblogs[random.Next(0, allblogs.Count())]);
+        }
+
         public ActionResult Gallery()
         {
             return View(db.Blogs.ToList());
