@@ -37,6 +37,7 @@ namespace CMPH_BlogProject.Controllers
         }
 
         // GET: Comments/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName");
@@ -57,13 +58,14 @@ namespace CMPH_BlogProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            comment.Created = DateTimeOffset.Now;
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
             ViewBag.BlogId = new SelectList(db.Blogs, "Id", "Title", comment.BlogId);
             return View(comment);
         }
 
         // GET: Comments/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -93,12 +95,14 @@ namespace CMPH_BlogProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            comment.Updated = DateTimeOffset.Now;
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
             ViewBag.BlogId = new SelectList(db.Blogs, "Id", "Title", comment.BlogId);
             return View(comment);
         }
 
         // GET: Comments/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

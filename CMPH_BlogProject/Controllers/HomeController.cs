@@ -50,7 +50,7 @@ namespace CMPH_BlogProject.Controllers
             return View();
         }
 
-        public ActionResult contact()
+        public ActionResult Contact()
         {
             EmailModel model = new EmailModel();
             return View(model);
@@ -63,19 +63,16 @@ namespace CMPH_BlogProject.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    var body = "<p>Email From: <bold>{0}</bold> ({ 1})</ p >< p > Message:</ p >< p >{ 2}</ p > ";
-                    var from = "MyPortfolio<example@email.com>";
-                    model.Body = "This is a message from your portfolio site.  The name and the email of the contacting person is above.";
-
+                {                  
+                    var from = "MyBlog<cmphayes@gmail.com>";                   
                     var email = new MailMessage(from,
                                 ConfigurationManager.AppSettings["emailto"])
                     {
-                        Subject = "Portfolio Contact Email",
-                        Body = string.Format(body, model.FromName, model.FromEmail,
-                                             model.Body),
+                        Subject = model.Subject,
+                        Body = $"<p> Email From: <bold>{model.FromName}</bold> ({model.FromEmail})</p><p> Subject:</p><p>{model.Subject}</p><p> Message:</p><p>{model.Body}</p>",                     
                         IsBodyHtml = true
                     };
+
 
                     var svc = new PersonalEmail();
                     await svc.SendAsync(email);

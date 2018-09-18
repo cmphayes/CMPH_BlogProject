@@ -86,8 +86,12 @@
 
                             @if (User.IsInRole("Admin"))
                             {
-                                @Html.ActionLink("Edit", "Edit", new { slug = item.Slug })|
+                                @Html.ActionLink("Edit", "Edit", new { slug = item.Slug })
                                 @Html.ActionLink("Delete", "Delete", new { slug = item.Slug })
+                            }
+                            @if (User.IsInRole("Admin") || User.IsInRole("Mod"))
+                            {
+                                @Html.ActionLink("Comment", "Create", "Comments")
                             }
                         </td>
                     </tr>

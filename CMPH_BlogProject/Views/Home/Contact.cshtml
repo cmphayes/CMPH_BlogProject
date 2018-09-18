@@ -3,7 +3,7 @@
     ViewBag.Title = "Contact";
 }
 <!-- Contact Section -->
-<section class="contact-section bg-black">
+<section class="contact-section bg-white">
 
     @using (Html.BeginForm())
     {
@@ -14,7 +14,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.FromName, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.FromName, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.FromName, new { @class = "form-control", placeholder = "Name" })
                 @Html.ValidationMessageFor(m => m.FromName)
             </div>
         </div>
@@ -45,9 +45,10 @@
             </div>
         </div>
     }
+</section>
 
 
-    <br />
+    @*<br />
     <br />
     <br />
     <br />
@@ -98,4 +99,4 @@
             </a>
         </div>
     </div>
-</section>
+</section>*@
