@@ -1,4 +1,6 @@
-﻿@model IEnumerable<CMPH_BlogProject.Models.Blog>
+﻿@model IPagedList<CMPH_BlogProject.Models.Blog>
+@using PagedList.Mvc
+@using PagedList
 @{
     ViewBag.Title = "Index";
 }
@@ -13,6 +15,13 @@
                 @Html.ActionLink("View Unpublished", "Unpublished")
             }
         </p>
+        @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get, htmlAttributes: new { @class = "form" }))
+        {
+            <div class="controls controls-row search-row">
+                <input id="searchStr" name="searchStr" class="input-block-level" type="text" placeholder="Search">
+                <button id="searchStr" name="searchStr" class="btn btn-success" type="submit"><i class="icon-search"></i></button>
+            </div>
+        }
 
         <div class="row"><br /></div>
 
@@ -108,4 +117,9 @@
             }
         }
     </div>
-    </section>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount	
+    @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))*@
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }));
+    @*This lets the search carry over to a new page*@
+
+</section>

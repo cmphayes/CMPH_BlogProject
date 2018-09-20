@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using CMPH_BlogProject.Helper;
 using CMPH_BlogProject.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace CMPH_BlogProject.Controllers
 {
@@ -17,9 +19,35 @@ namespace CMPH_BlogProject.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Blogs
-        public ActionResult Index()
+        public ActionResult Index(int? page, string searchStr)
         {
-            return View(db.Blogs.ToList());
+            ViewBag.Search = searchStr; var blogList = IndexSearch(searchStr);
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+            return View(blogList.ToPagedList(pageNumber, pageSize));
+        }
+
+
+        public IQueryable<Blog> IndexSearch(string searchStr)
+        {
+            IQueryable<Blog> result = null; if (searchStr != null)
+            {
+                result = db.Blogs.AsQueryable(); result = result.Where(p => p.Title.Contains(searchStr) 
+                || p.Body.Contains(searchStr) 
+                || p.Comments.Any(c => c.Body.Contains(searchStr) 
+                || c.Author.FirstName.Contains(searchStr) 
+                || c.Author.LastName.Contains(searchStr) 
+                || c.Author.DisplayName.Contains(searchStr) 
+                || c.Author.Email.Contains(searchStr)));
+            }
+                else
+                {
+                result = db.Blogs.AsQueryable();
+                }
+
+            return result.OrderByDescending(p => p.Created);
         }
 
         // GET: Blogs/Create
