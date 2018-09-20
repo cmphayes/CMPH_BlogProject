@@ -75,25 +75,45 @@
             @Html.DisplayFor(model => model.Published)
         </dd>
 
-    </dl>
-    <p><p>
-        @if (User.IsInRole("Admin"))
-        {
-            @Html.ActionLink("Edit", "Edit", new { slug = Model.Slug })
-            @Html.ActionLink("Delete", "Delete", new { slug = Model.Slug })
-        };
-        @Html.ActionLink("Back to List", "Index")
+        <dt>
 
-    </p>
+        </dt>
+
+        <dd>
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { slug = Model.Slug })
+                @Html.ActionLink("Delete", "Delete", new { slug = Model.Slug })
+            }
+            @Html.ActionLink("Back to List", "Index")
+        </dd>
+    </dl>
+
 </div>
 <div>
     @foreach (var comment in Model.Comments.OrderByDescending(p => p.Created))
     {
-
-    };
-    @if(User.IsInRole("Admin") || User.IsInRole("Mod"))
+        <table class="table">
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.Updated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => comment.Body)
+                </td>
+            </tr>
+        </table>
+        @Html.ActionLink("Details", "Details", "Comments", new { Id = comment.Id })
+    }
+    @if (User.IsInRole("Admin") || User.IsInRole("Mod"))
     {
-        @using(Html.BeginForm("Create", "Comments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        using (Html.BeginForm("Create", "Comments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
             @Html.Hidden("BlogId", Model.Id)
@@ -102,11 +122,15 @@
             <div class="form-group">
                 @Html.Label("Add Comment", htmlAttributes: new { @class = "form-horizontal col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextArea("CommentBody", new { htmlAttributes = new { @class = "form-control" })
+                    @Html.TextArea("CommentBody", new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
-         }
-    };
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Comment" class="btn btn-default" />
+                </div>
+            </div>
+        }
+    }
 </div>
-};
 

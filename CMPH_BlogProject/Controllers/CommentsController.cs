@@ -59,12 +59,11 @@ namespace CMPH_BlogProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            comment.Created = DateTimeOffset.Now;
-            comment.AuthorId = User.Identity.GetUserId();
-            comment.Body = CommentBody();
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.BlogId = new SelectList(db.Blogs, "Id", "Title", comment.BlogId);
-            RedirectToAction("Details", "Blog", new { slug = Slug });
+                comment.Created = DateTimeOffset.Now;
+                comment.AuthorId = User.Identity.GetUserId();
+                comment.Body = CommentBody;
+                db.SaveChanges();
+                return RedirectToAction("Details", "Comments", new { slug = Slug });
         }
 
         // GET: Comments/Edit/5

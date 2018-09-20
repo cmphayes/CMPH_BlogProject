@@ -197,9 +197,10 @@ namespace CMPH_BlogProject.Controllers
 
         public ActionResult feature()
         {
-            var random = new Random();
-            var allblogs = db.Blogs.ToList();
-            return View(allblogs[random.Next(0, allblogs.Count())]);
+            //var random = new Random();
+            //var allblogs = db.Blogs.ToList(); 
+           // allblogs[random.Next(0, allblogs.Count())]
+            return View();
         }
 
         public ActionResult Gallery()

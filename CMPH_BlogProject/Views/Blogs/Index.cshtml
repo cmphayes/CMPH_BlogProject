@@ -1,9 +1,17 @@
-﻿@model IPagedList<CMPH_BlogProject.Models.Blog>
-@using PagedList.Mvc
+﻿@using PagedList.Mvc
 @using PagedList
+@model IPagedList<CMPH_BlogProject.Models.Blog>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
+
 @{
     ViewBag.Title = "Index";
 }
+
 <section id="projects" class="projects-section bg-light">
     <div class="container">
         <h2>Check Out Some Of My Blogs</h2>
@@ -15,48 +23,41 @@
                 @Html.ActionLink("View Unpublished", "Unpublished")
             }
         </p>
-        @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get, htmlAttributes: new { @class = "form" }))
+        @using (Html.BeginForm("Index", "Blogs", FormMethod.Get, htmlAttributes: new { @class = "form" }))
         {
             <div class="controls controls-row search-row">
-                <input id="searchStr" name="searchStr" class="input-block-level" type="text" placeholder="Search">
+                <input id="searchStr" name="searchStr" class="input-block-level" type="text" placeholder="Search" />
                 <button id="searchStr" name="searchStr" class="btn btn-success" type="submit"><i class="icon-search"></i></button>
             </div>
         }
 
         <div class="row"><br /></div>
 
-        <style>
-            table, th, td {
-                border: 1px solid black;
-            }
-        </style>
-
-
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Created)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Updated)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Updated)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Title)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Abstract)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Abstract)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Slug)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Slug)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Body)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Body)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MediaURL)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().MediaURL)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Published)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Published)
                 </th>
                 <th></th>
             </tr>
@@ -92,16 +93,12 @@
                         </td>
                         <td>
                             @Html.ActionLink("Details", "Details", new { slug = item.Slug })
-                            @Html.ActionLink("View Comments", "Index", "Comments")
+                            @*@Html.ActionLink("View Comments", "Index", "Comments")*@
 
                             @if (User.IsInRole("Admin"))
                             {
                                 @Html.ActionLink("Edit", "Edit", new { slug = item.Slug })
                                 @Html.ActionLink("Delete", "Delete", new { slug = item.Slug })
-                            }
-                            @if (User.IsInRole("Admin") || User.IsInRole("Mod"))
-                            {
-                                @Html.ActionLink("Comment", "Create", "Comments")
                             }
                         </td>
                     </tr>
@@ -117,7 +114,7 @@
             }
         }
     </div>
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount	
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))*@
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }));
     @*This lets the search carry over to a new page*@
