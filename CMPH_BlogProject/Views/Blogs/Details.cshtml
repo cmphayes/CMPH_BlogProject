@@ -76,8 +76,37 @@
         </dd>
 
     </dl>
+    <p><p>
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { slug = Model.Slug })
+            @Html.ActionLink("Delete", "Delete", new { slug = Model.Slug })
+        };
+        @Html.ActionLink("Back to List", "Index")
+
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { slug = Model.Slug }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div>
+    @foreach (var comment in Model.Comments.OrderByDescending(p => p.Created))
+    {
+
+    };
+    @if(User.IsInRole("Admin") || User.IsInRole("Mod"))
+    {
+        @using(Html.BeginForm("Create", "Comments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("BlogId", Model.Id)
+            @Html.HiddenFor(model => model.Slug)
+
+            <div class="form-group">
+                @Html.Label("Add Comment", htmlAttributes: new { @class = "form-horizontal col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextArea("CommentBody", new { htmlAttributes = new { @class = "form-control" })
+                </div>
+            </div>
+         }
+    };
+</div>
+};
+

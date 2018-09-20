@@ -32,9 +32,10 @@ namespace CMPH_BlogProject.Controllers
 
         public IQueryable<Blog> IndexSearch(string searchStr)
         {
-            IQueryable<Blog> result = null; if (searchStr != null)
+            var result = db.Blogs.Where(b => b.Published).AsQueryable();
+            if (searchStr != null)
             {
-                result = db.Blogs.AsQueryable(); result = result.Where(p => p.Title.Contains(searchStr) 
+                result = result.Where(p => p.Title.Contains(searchStr) 
                 || p.Body.Contains(searchStr) 
                 || p.Comments.Any(c => c.Body.Contains(searchStr) 
                 || c.Author.FirstName.Contains(searchStr) 
@@ -42,10 +43,10 @@ namespace CMPH_BlogProject.Controllers
                 || c.Author.DisplayName.Contains(searchStr) 
                 || c.Author.Email.Contains(searchStr)));
             }
-                else
-                {
-                result = db.Blogs.AsQueryable();
-                }
+            else
+            {
+            result = db.Blogs.AsQueryable();
+            }
 
             return result.OrderByDescending(p => p.Created);
         }

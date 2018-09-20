@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CMPH_BlogProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CMPH_BlogProject.Controllers
 {
@@ -37,20 +38,20 @@ namespace CMPH_BlogProject.Controllers
         }
 
         // GET: Comments/Create
-        [Authorize(Roles = "Admin")]
-        public ActionResult Create()
-        {
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName");
-            ViewBag.BlogId = new SelectList(db.Blogs, "Id", "Title");
-            return View();
-        }
+        //[Authorize(Roles = "Admin")]
+        //public ActionResult Create()
+        //{
+        //    ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName");
+        //    ViewBag.BlogId = new SelectList(db.Blogs, "Id", "Title");
+        //    return View();
+        //}
 
         // POST: Comments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,BlogId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment)
+        public ActionResult Create([Bind(Include = "BlogId")] Comment comment, string CommentBody, string Slug)
         {
             if (ModelState.IsValid)
             {
@@ -59,9 +60,11 @@ namespace CMPH_BlogProject.Controllers
                 return RedirectToAction("Index");
             }
             comment.Created = DateTimeOffset.Now;
+            comment.AuthorId = User.Identity.GetUserId();
+            comment.Body = CommentBody();
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
             ViewBag.BlogId = new SelectList(db.Blogs, "Id", "Title", comment.BlogId);
-            return View(comment);
+            RedirectToAction("Details", "Blog", new { slug = Slug });
         }
 
         // GET: Comments/Edit/5
