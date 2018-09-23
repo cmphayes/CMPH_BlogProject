@@ -11,14 +11,16 @@ using Microsoft.AspNet.Identity;
 
 namespace CMPH_BlogProject.Controllers
 {
+    [RequireHttps]
+
     public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
-        public ActionResult Index(string slug)
+        public ActionResult Index()
         {
-            var comments = db.Comments.Include(c => c.Author).Include(c => c.Blog);
+            var comments = db.Comment.Include(c => c.Author).Include(c => c.Blog);
             return View(comments.ToList());
         }
 
@@ -29,7 +31,7 @@ namespace CMPH_BlogProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
+            Comment comment = db.Comment.Find(id);
             if (comment == null)
             {
                 return HttpNotFound();
@@ -51,19 +53,22 @@ namespace CMPH_BlogProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BlogId")] Comment comment, string CommentBody, string Slug)
+        public ActionResult Create([Bind(Include = "BlogId,Body")] Comment comment, string CommentBody, string Slug)
         {
             if (ModelState.IsValid)
             {
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-                comment.Created = DateTimeOffset.Now;
                 comment.AuthorId = User.Identity.GetUserId();
                 comment.Body = CommentBody;
+                comment.Created = DateTimeOffset.Now;
+                db.Comment.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Comments", new { slug = Slug });
+                return RedirectToAction("Details", "Blogs", new { Slug });
+            }
+            //comment.Created = DateTimeOffset.Now;
+            //comment.AuthorId = User.Identity.GetUserId();
+            //comment.Body = CommentBody;
+            //db.SaveChanges();
+            return RedirectToAction("PublishedBlogs", "Blogs");
         }
 
         // GET: Comments/Edit/5
@@ -74,13 +79,13 @@ namespace CMPH_BlogProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
+            Comment comment = db.Comment.Find(id);
             if (comment == null)
             {
                 return HttpNotFound();
             }
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.BlogId = new SelectList(db.Blogs, "Id", "Title", comment.BlogId);
+            ViewBag.BlogId = new SelectList(db.Blog, "Id", "Title", comment.BlogId);
             return View(comment);
         }
 
@@ -99,19 +104,20 @@ namespace CMPH_BlogProject.Controllers
             }
             comment.Updated = DateTimeOffset.Now;
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.BlogId = new SelectList(db.Blogs, "Id", "Title", comment.BlogId);
+            ViewBag.BlogId = new SelectList(db.Blog, "Id", "Title", comment.BlogId);
             return View(comment);
         }
 
         // GET: Comments/Delete/5
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, string slug)
         {
+            ViewBag.Slug = slug;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
+            Comment comment = db.Comment.Find(id);
             if (comment == null)
             {
                 return HttpNotFound();
@@ -124,8 +130,8 @@ namespace CMPH_BlogProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Comment comment = db.Comments.Find(id);
-            db.Comments.Remove(comment);
+            Comment comment = db.Comment.Find(id);
+            db.Comment.Remove(comment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

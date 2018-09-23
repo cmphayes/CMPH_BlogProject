@@ -8,9 +8,23 @@
 <section id="projects" class="projects-section bg-light">
     <div class="container">
 
-        <h2>Check Out These Unpublished Blogs</h2>
-
-        <p>@Html.ActionLink("Back To Published", "Index")</p>
+        <h2>Unpublished Blogs</h2>
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Create New", "Create")
+            <br />
+            @Html.ActionLink("View All Blogs", "Index")
+            <br />
+            @Html.ActionLink("View Published", "PublishedBlogs")
+            <br />
+        }
+        @using (Html.BeginForm("UnpublishedBlogs", "Blogs", FormMethod.Get, htmlAttributes: new { @class = "form" }))
+        {
+            <div class="controls controls-row search-row">
+                <input id="searchStr" name="searchStr" class="input-block-level" type="text" placeholder="Search" />
+                <button id="searchStr" name="searchStr" class="btn btn-info" type="submit"><i class="icon-search"></i>Search</button>
+            </div>
+        }
 
         <div class="row"><br /></div>
 

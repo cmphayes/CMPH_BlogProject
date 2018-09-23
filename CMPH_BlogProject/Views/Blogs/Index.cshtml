@@ -20,14 +20,17 @@
             {
                 @Html.ActionLink("Create New", "Create")
                 <br />
-                @Html.ActionLink("View Unpublished", "Unpublished")
+                @Html.ActionLink("View Unpublished Blogs", "UnpublishedBlogs")
+                <br />
+                @Html.ActionLink("View Published Blogs", "PublishedBlogs")
+                <br />
             }
         </p>
         @using (Html.BeginForm("Index", "Blogs", FormMethod.Get, htmlAttributes: new { @class = "form" }))
         {
             <div class="controls controls-row search-row">
                 <input id="searchStr" name="searchStr" class="input-block-level" type="text" placeholder="Search" />
-                <button id="searchStr" name="searchStr" class="btn btn-success" type="submit"><i class="icon-search"></i></button>
+                <button id="searchStr" name="searchStr" class="btn btn-info" type="submit"><i class="icon-search"></i>Search</button>
             </div>
         }
 
@@ -111,6 +114,7 @@
             {
                 @Html.DisplayFor(modelItem => item.Title)
                 <img class="img-responsive" src="@item.MediaURL" alt="">
+
             }
         }
     </div>

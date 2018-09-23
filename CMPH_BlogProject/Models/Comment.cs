@@ -22,5 +22,10 @@ namespace CMPH_BlogProject.Models
         public string UpdateReason { get; set; }
         public virtual ApplicationUser Author { get; set; }
         public virtual Blog Blog { get; set; }
+
+        public Comment()
+        {
+
+        }
     }
 }

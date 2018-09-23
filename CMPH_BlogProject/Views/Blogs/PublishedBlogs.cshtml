@@ -1,0 +1,72 @@
+﻿@model IPagedList<CMPH_BlogProject.Models.Blog>
+@using PagedList.Mvc
+@using PagedList
+@{
+    ViewBag.Title = "PublishedBlogs";
+}
+
+<h2>PublishedBlogs</h2>
+
+<section id="projects" class="projects-section bg-light">
+    <div class="container">
+        <h2>Check Out Some Of My Blogs</h2>
+        <p>
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Create New", "Create")
+                <br />
+                @Html.ActionLink("View Unpublished", "Unpublished")
+                <br />
+                @Html.ActionLink("View All Blogs", "Index")
+                <br />
+
+            }
+        </p>
+        @using (Html.BeginForm("PublishedBlogs", "Blogs", FormMethod.Get, htmlAttributes: new { @class = "form" }))
+        {
+            <div class="controls controls-row search-row">
+                <input id="searchStr" name="searchStr" class="input-block-level" type="text" placeholder="Search" />
+                <button id="searchStr" name="searchStr" class="btn btn-info" type="submit"><i class="icon-search"></i>Search</button>
+            </div>
+        }
+
+        <div class="row"><br /></div>
+        <div class="container align-items-center">
+            @foreach (var item in Model)
+            {
+                if (item.Published == true)
+                {
+                    @Html.Raw(item.Title)
+                    <br />
+                    @Html.Raw(item.Body)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.Created)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.Updated)
+                    <br />
+                    if (item.MediaURL != null)
+                    {
+                        @*@Html.DisplayFor(modelItem => item.MediaURL)*@
+                        <img class="img-responsive" src="@item.MediaURL" alt="">
+                    }
+                    <br />
+                    @Html.ActionLink("Details", "Details", new { slug = item.Slug })
+                    @*@Html.ActionLink("View Comments", "Index", "Comments")*@
+                    <br />
+                    if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { slug = item.Slug })
+                        @Html.ActionLink("Delete", "Delete", new { slug = item.Slug })
+                    }
+                    <hr />
+                }
+            }
+        </div>
+
+    </div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))*@
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }));
+    @*This lets the search carry over to a new page*@
+
+</section>

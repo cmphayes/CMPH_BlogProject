@@ -42,7 +42,7 @@ namespace CMPH_BlogProject.Models
         {
             return new ApplicationDbContext();
         } 
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Blog> Blog { get; set; }
+        public DbSet<Comment> Comment { get; set; }
     }
 }

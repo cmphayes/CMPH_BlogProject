@@ -15,6 +15,7 @@ using CMPH_BlogProject.Models;
 
 namespace CMPH_BlogProject.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -87,6 +88,12 @@ namespace CMPH_BlogProject.Controllers
             }
             return View(model);
         }
+
+        //public ActionResult viewbagcomments()
+        //{
+        //    ViewBag.comments = Model.comments();
+        //    return View();
+        //}
 
     }
 }

@@ -58,11 +58,11 @@ namespace CMPH_BlogProject
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "530413156545-7jqufuimp3tqbg8dhadg7c676s1vajm9.apps.googleusercontent.com",
+                ClientSecret = "hymWyrz5AszexBf5zLHqNqKj"
+            });
         }
     }
 }

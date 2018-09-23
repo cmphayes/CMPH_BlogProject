@@ -14,11 +14,14 @@ using PagedList.Mvc;
 
 namespace CMPH_BlogProject.Controllers
 {
+    [RequireHttps]
+
     public class BlogsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Blogs
+        [Authorize(Roles = "Admin")]
         public ActionResult Index(int? page, string searchStr)
         {
             ViewBag.Search = searchStr; var blogList = IndexSearch(searchStr);
@@ -29,10 +32,10 @@ namespace CMPH_BlogProject.Controllers
             return View(blogList.ToPagedList(pageNumber, pageSize));
         }
 
-
+        [Authorize(Roles = "Admin")]
         public IQueryable<Blog> IndexSearch(string searchStr)
         {
-            var result = db.Blogs.Where(b => b.Published).AsQueryable();
+            var result = db.Blog.Where(b => b.Published).AsQueryable();
             if (searchStr != null)
             {
                 result = result.Where(p => p.Title.Contains(searchStr) 
@@ -45,11 +48,78 @@ namespace CMPH_BlogProject.Controllers
             }
             else
             {
-            result = db.Blogs.AsQueryable();
+            result = db.Blog.AsQueryable();
             }
 
             return result.OrderByDescending(p => p.Created);
         }
+
+        // GET: Blogs
+        public ActionResult PublishedBlogs(int? page, string searchStr)
+        {
+            ViewBag.Search = searchStr; var blogList = PublishedBlogsSearch(searchStr);
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+            return View(blogList.ToPagedList(pageNumber, pageSize));
+        }
+
+
+        public IQueryable<Blog> PublishedBlogsSearch(string searchStr)
+        {
+            var result = db.Blog.Where(b => b.Published).AsQueryable();
+            if (searchStr != null)
+            {
+                result = result.Where(p => p.Title.Contains(searchStr)
+                || p.Body.Contains(searchStr)
+                || p.Comments.Any(c => c.Body.Contains(searchStr)
+                || c.Author.FirstName.Contains(searchStr)
+                || c.Author.LastName.Contains(searchStr)
+                || c.Author.DisplayName.Contains(searchStr)
+                || c.Author.Email.Contains(searchStr)));
+            }
+            else
+            {
+                result = db.Blog.AsQueryable();
+            }
+
+            return result.OrderByDescending(p => p.Created);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult UnpublishedBlogs(int? page, string searchStr)
+        {
+            ViewBag.Search = searchStr; var blogList = UnpublishedBlogsSearch(searchStr);
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+            return View(blogList.ToPagedList(pageNumber, pageSize));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IQueryable<Blog> UnpublishedBlogsSearch(string searchStr)
+        {
+            var result = db.Blog.Where(b => b.Published == false).AsQueryable();
+            if (searchStr != null)
+            {
+                result = result.Where(p => p.Title.Contains(searchStr)
+                || p.Body.Contains(searchStr)
+                || p.Comments.Any(c => c.Body.Contains(searchStr)
+                || c.Author.FirstName.Contains(searchStr)
+                || c.Author.LastName.Contains(searchStr)
+                || c.Author.DisplayName.Contains(searchStr)
+                || c.Author.Email.Contains(searchStr)));
+            }
+            else
+            {
+                result = db.Blog.AsQueryable();
+            }
+
+            return result.OrderByDescending(p => p.Created);
+        }
+
 
         // GET: Blogs/Create
         [Authorize(Roles = "Admin")]
@@ -74,7 +144,7 @@ namespace CMPH_BlogProject.Controllers
                     ModelState.AddModelError("Title", "Invalid title");
                     return View(blog);
                 }
-                if (db.Blogs.Any(p => p.Slug == slug))
+                if (db.Blog.Any(p => p.Slug == slug))
                 {
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blog);
@@ -88,7 +158,7 @@ namespace CMPH_BlogProject.Controllers
 
                 blog.Slug = slug;
                 blog.Created = DateTimeOffset.Now;
-                db.Blogs.Add(blog);
+                db.Blog.Add(blog);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -103,7 +173,7 @@ namespace CMPH_BlogProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Blog blog = db.Blogs.FirstOrDefault(p => p.Slug == slug);
+            Blog blog = db.Blog.FirstOrDefault(p => p.Slug == slug);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -119,7 +189,7 @@ namespace CMPH_BlogProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Blog blog = db.Blogs.FirstOrDefault(p => p.Slug == slug);
+            Blog blog = db.Blog.FirstOrDefault(p => p.Slug == slug);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -145,7 +215,7 @@ namespace CMPH_BlogProject.Controllers
                     ModelState.AddModelError("Title", "Invalid title");
                     return View(blog);
                 }
-                if (blog.Slug != slug && db.Blogs.Any(p => p.Slug == slug))
+                if (blog.Slug != slug && db.Blog.Any(p => p.Slug == slug))
                 {
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blog);
@@ -176,7 +246,7 @@ namespace CMPH_BlogProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Blog blog = db.Blogs.FirstOrDefault(p => p.Slug == slug);
+            Blog blog = db.Blog.FirstOrDefault(p => p.Slug == slug);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -189,8 +259,8 @@ namespace CMPH_BlogProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string slug)
         {
-            Blog blog = db.Blogs.FirstOrDefault(p => p.Slug == slug);
-            db.Blogs.Remove(blog);
+            Blog blog = db.Blog.FirstOrDefault(p => p.Slug == slug);
+            db.Blog.Remove(blog);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -205,8 +275,39 @@ namespace CMPH_BlogProject.Controllers
 
         public ActionResult Gallery()
         {
-            return View(db.Blogs.ToList());
+            return View(db.Blog.ToList());
         }
+
+        public ActionResult ViewComment(int? id)
+        {
+            if (id != null)
+            {
+                return RedirectToAction("Details", "Comments", id);
+            }
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View();
+        }
+
+        //public ActionResult Comments(int? id)
+        //{
+        //    var comments = db.Comment.Where(x => x.BlogID == id).ToArray();
+        //    return Json(comments, JsonRequestBehavior.AllowGet);
+        //}
+
+        //[HttpPost]
+        //public async Task<ActionResult> Comment(Comment data)
+        //{
+        //    db.Comment.Add(data);
+        //    db.SaveChanges();
+        //    var options = new PusherOptions();
+        //    options.Cluster = "XXX_APP_CLUSTER";
+        //    var pusher = new Pusher("XXX_APP_ID", "XXX_APP_KEY", "XXX_APP_SECRET", options);
+        //    ITriggerResult result = await pusher.TriggerAsync("asp_channel", "asp_event", data);
+        //    return Content("ok");
+        //}
 
         protected override void Dispose(bool disposing)
         {
@@ -217,11 +318,7 @@ namespace CMPH_BlogProject.Controllers
             base.Dispose(disposing);
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult Unpublished()
-        {
-            return View(db.Blogs.ToList());
-        }
+
     }
 }
 

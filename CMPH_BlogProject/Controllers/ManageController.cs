@@ -10,6 +10,8 @@ using CMPH_BlogProject.Models;
 
 namespace CMPH_BlogProject.Controllers
 {
+    [RequireHttps]
+
     [Authorize]
     public class ManageController : Controller
     {
