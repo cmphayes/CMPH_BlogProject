@@ -209,27 +209,30 @@ namespace CMPH_BlogProject.Controllers
                 //The Title and slug must be unique so what happens if we edit the Title and the resulting slug is already present?
 
                 var slug = StringUtilities.URLFriendly(blog.Title);
+                if (slug != blog.Slug)
+                {
+                    if (String.IsNullOrWhiteSpace(slug))
+                    {
+                        ModelState.AddModelError("Title", "Invalid title");
+                        return View(blog);
+                    }
+                    if (db.Blog.Any(p => p.Slug == slug))
+                    {
+                        ModelState.AddModelError("Title", "The title must be unique");
+                        return View(blog);
+                    }
+                }
+                
 
-                if (String.IsNullOrWhiteSpace(slug))
-                {
-                    ModelState.AddModelError("Title", "Invalid title");
-                    return View(blog);
-                }
-                if (blog.Slug != slug && db.Blog.Any(p => p.Slug == slug))
-                {
-                    ModelState.AddModelError("Title", "The title must be unique");
-                    return View(blog);
-                }
-                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                    if (ImageUploadValidator.IsWebFriendlyImage(image))
                 {
                     var fileName = Path.GetFileName(image.FileName);
                     image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
                     blog.MediaURL = "/Uploads/" + fileName;
                 }
-
-
                 blog.Slug = slug;
                 blog.Updated = DateTimeOffset.Now;
+                db.Blog.Add(blog);
                 db.Entry(blog).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("PublishedBlogs");
