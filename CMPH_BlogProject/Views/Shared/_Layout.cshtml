@@ -47,7 +47,7 @@
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href=@Url.Action("Feature", "Blogs")>Content</a>
                     </li>
-                    @if (User.IsInRole("Admin") || User.IsInRole("Mod"))
+                    @if (user)
                     {
                         <li class="nav-item">
                             @Html.ActionLink("Log Out", "LogOff", "Account", null, new { @class = "nav-link js-scroll-trigger" })

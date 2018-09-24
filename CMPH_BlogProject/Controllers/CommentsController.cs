@@ -18,6 +18,7 @@ namespace CMPH_BlogProject.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult Index()
         {
             var comments = db.Comment.Include(c => c.Author).Include(c => c.Blog);
@@ -52,7 +53,7 @@ namespace CMPH_BlogProject.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]     
         public ActionResult Create([Bind(Include = "BlogId,Body")] Comment comment, string CommentBody, string Slug)
         {
             if (ModelState.IsValid)
@@ -72,7 +73,7 @@ namespace CMPH_BlogProject.Controllers
         }
 
         // GET: Comments/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -94,6 +95,7 @@ namespace CMPH_BlogProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult Edit([Bind(Include = "Id,BlogId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment)
         {
             if (ModelState.IsValid)
@@ -110,7 +112,7 @@ namespace CMPH_BlogProject.Controllers
         }
 
         // GET: Comments/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult Delete(int? id, string slug)
         {
             ViewBag.Slug = slug;
@@ -129,6 +131,7 @@ namespace CMPH_BlogProject.Controllers
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult DeleteConfirmed(int id)
         {
             Comment comment = db.Comment.Find(id);

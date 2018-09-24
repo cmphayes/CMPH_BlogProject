@@ -44,8 +44,10 @@
                     <br />
                     if (item.MediaURL != null)
                     {
+                        <div style="height:42px;width:42px">
                         @*@Html.DisplayFor(modelItem => item.MediaURL)*@
                         <img class="img-responsive" src="@item.MediaURL" alt="">
+                        </div>
                     }
                     <br />
                     @Html.ActionLink("Details", "Details", new { slug = item.Slug })

@@ -39,7 +39,7 @@
                     <div class="panel-heading row">
                         <div class="col-md-10">
                         </div>
-                        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Mod"))
                         {
                             <div class="boxed-col-md-2">
                                 @Html.ActionLink(" Edit ", "Edit", "Comments", new { comment.Id, Model.Slug }, null)

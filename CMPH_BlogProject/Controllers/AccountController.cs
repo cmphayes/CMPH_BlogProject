@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CMPH_BlogProject.Models;
+using System.Configuration;
+using System.Net.Mail;
 
 namespace CMPH_BlogProject.Controllers
 {
@@ -214,9 +216,21 @@ namespace CMPH_BlogProject.Controllers
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                  string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                var from = ConfigurationManager.AppSettings["emailfrom"];
+                var email = new MailMessage(from, model.Email)
+                {
+                    Subject = "Reset Password",
+                    Body = "Please reset your password by clicking <a href=" + callbackUrl + ">here</a>",
+                    //$"<p> Email From: <bold>{model.FromName}</bold> ({model.FromEmail})</p><p> Subject:</p><p>{model.Subject}</p><p> Message:</p><p>{model.Body}</p>",
+                    IsBodyHtml = true
+                };
+                var svc = new PersonalEmail();
+                await svc.SendAsync(email);
+
+                //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                                                                                                           
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form

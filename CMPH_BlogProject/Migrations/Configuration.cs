@@ -32,6 +32,17 @@ namespace CMPH_BlogProject.Migrations
             var userManager = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(context));
             //create user to assign to admin role
+            if (!context.Users.Any(u => u.Email == "1234@Mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "1234@Mailinator.com",
+                    Email = "1234@Mailinator.com",
+                    FirstName = "Conall",
+                    LastName = "Hayes",
+                    DisplayName = "ConallHayes"
+                }, "Abcd1234!");
+            }
             if (!context.Users.Any(u => u.Email == "cmphayes@gmail.com"))
             {
                 userManager.Create(new ApplicationUser

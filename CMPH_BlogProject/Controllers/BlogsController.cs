@@ -73,6 +73,7 @@ namespace CMPH_BlogProject.Controllers
             {
                 result = result.Where(p => p.Title.Contains(searchStr)
                 || p.Body.Contains(searchStr)
+                || p.Abstract.Contains(searchStr)
                 || p.Comments.Any(c => c.Body.Contains(searchStr)
                 || c.Author.FirstName.Contains(searchStr)
                 || c.Author.LastName.Contains(searchStr)
@@ -122,7 +123,7 @@ namespace CMPH_BlogProject.Controllers
 
 
         // GET: Blogs/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult Create()
         {
             return View();
@@ -134,6 +135,7 @@ namespace CMPH_BlogProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult Create([Bind(Include = "Id,Title,Body,MediaURL,Published")] Blog blog, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
@@ -182,7 +184,7 @@ namespace CMPH_BlogProject.Controllers
         }
 
         // GET: Blogs/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult Edit(string slug)
         {
             if (String.IsNullOrWhiteSpace(slug))
@@ -202,6 +204,7 @@ namespace CMPH_BlogProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult Edit([Bind(Include = "Id,Title,Created,Body,Slug,MediaURL,Published")] Blog blog, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
@@ -242,7 +245,7 @@ namespace CMPH_BlogProject.Controllers
         }
 
         // GET: Blogs/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Mod")]
         public ActionResult Delete(string slug)
         {
             if (slug == null)
@@ -258,6 +261,7 @@ namespace CMPH_BlogProject.Controllers
         }
 
         // POST: Blogs/Delete/5
+        [Authorize(Roles = "Admin,Mod")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string slug)
