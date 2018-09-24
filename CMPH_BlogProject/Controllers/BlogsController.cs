@@ -160,7 +160,7 @@ namespace CMPH_BlogProject.Controllers
                 blog.Created = DateTimeOffset.Now;
                 db.Blog.Add(blog);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("PublishedBlogs", "Blogs");
             }
 
             return View(blog);
@@ -232,7 +232,7 @@ namespace CMPH_BlogProject.Controllers
                 blog.Updated = DateTimeOffset.Now;
                 db.Entry(blog).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("PublishedBlogs");
             }
 
             return View(blog);
@@ -262,7 +262,7 @@ namespace CMPH_BlogProject.Controllers
             Blog blog = db.Blog.FirstOrDefault(p => p.Slug == slug);
             db.Blog.Remove(blog);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("PublishedBlogs");
         }
 
         public ActionResult feature()
@@ -278,18 +278,18 @@ namespace CMPH_BlogProject.Controllers
             return View(db.Blog.ToList());
         }
 
-        public ActionResult ViewComment(int? id)
-        {
-            if (id != null)
-            {
-                return RedirectToAction("Details", "Comments", id);
-            }
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            return View();
-        }
+        //public ActionResult ViewComment(int? id)
+        //{
+        //    if (id != null)
+        //    {
+        //        return RedirectToAction("Details", "Comments", id);
+        //    }
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    return View();
+        //}
 
         //public ActionResult Comments(int? id)
         //{

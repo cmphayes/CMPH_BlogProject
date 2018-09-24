@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Details";
 }
-
+<div class="row"><br /></div>
 <h2>Details</h2>
 
 <!-- Page Header -->
@@ -21,7 +21,6 @@
         </div>
     </div>
 </header>
-
 <!-- Post Content -->
 <article>
     <div class="container">
@@ -29,29 +28,6 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 @Html.Raw(Model.Body)
             </div>
-
-            @*@if (User.Identity.IsAuthenticated)
-                {
-                    <hr />
-                    <div class="row">
-                        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
-                            @using (Html.BeginForm("Create", "Comments", FormMethod.Post, htmlAttributes: new { @class = "form" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                @Html.Hidden("BlogId", Model.Id)
-                                @Html.HiddenFor(m => m.Slug)
-
-                                <div class="form-group">
-                                    @Html.Label("Add Comment", new { @class = "col-md-2 control-label" })
-                                    <div class="col-md-8">
-                                        @Html.TextArea("commentBody", new { @class = "form-control", placeholder = "Comment Body", rows = "4" })
-                                    </div>
-                                </div>
-                                <button class="btn btn-success" type="submit"></button>
-                            }
-                        </div>
-                    </div>
-                }*@
         </div>
         <div class="row">
             @foreach (var comment in Model.Comments)
@@ -60,187 +36,29 @@
                     <div class="panel-heading row">
                         <div class="col-md-10">
                         </div>
-
                         @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                         {
-                            <div class="col-md-2">
+                            <div class="boxed-col-md-2">
                                 @Html.ActionLink(" Edit ", "Edit", "Comments", new { comment.Id, Model.Slug }, null)
                                 @Html.ActionLink(" Delete ", "Delete", "Comments", new { comment.Id, Model.Slug }, null)
                                 @Html.ActionLink(" Details ", "Details", "Comments", new { comment.Id, Model.Slug }, null)
-
                             </div>
                         }
                     </div>
-
                     <div class="panel-body row">@comment.Body</div>
                     <div class="panel-footer row">Posted: @comment.Created.ToString("f")</div>
                 </div>
+                <hr />
             }
         </div>
-
-
     </div>
 </article>
 <hr>
-
-
-@*<style>
-    .user_name {
-        font-size: 14px;
-        font-weight: bold;
-    }
-
-    .comments-list .media {
-        border-bottom: 1px dotted #ccc;
-    }
-</style>*@
-@*<h2>Details</h2>
-<div id="app">
-    <div>
-        <h4>BlogPost</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Body)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Body)
-            </dd>
-
-        </dl>
-    </div>*@
-    @*<div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="page-header">
-                        <h1><small class="pull-right">{{comments.length}} comments</small> Comments </h1>
-                    </div>
-                    <div class="comments-list">
-                        <div class="media" v-for="com in comments">
-                            <div class="media-body">
-                                <h4 class="media-heading user_name">{{com.Name}}</h4>
-                                {{com.Body}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-    @*<div class="container">
-            <br />
-            <p>Your Comment</p>
-            <form onsubmit="return false;">
-                <input type="text" id="Name" placeholder="Your Name" v-model="comment.Name" class="form-control" />
-                <textarea rows="3" placeholder="Your Comment" id="Body" v-model="comment.Body" class="form-control"></textarea>
-                <button class="btn btn-success" v-on:click="submit_comment()">save</button>
-            </form>
-        </div>*@
 <p>
-
     @Html.ActionLink("Back to List", "Index")
 </p>
 <div>
-    @*<h4>Blog</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Created)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Created)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Updated)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Updated)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Title)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Title)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Abstract)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Abstract)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Slug)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Slug)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Body)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Body)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.MediaURL)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.MediaURL)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Published)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Published)
-                </dd>
-
-                <dt>
-
-                </dt>
-
-                <dd>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { slug = Model.Slug })
-                        @Html.ActionLink("Delete", "Delete", new { slug = Model.Slug })
-                    }
-                    @Html.ActionLink("Back to List", "Index")
-                </dd>
-            </dl>
-        </div>*@
     <div>
-        @*@foreach (var comment in Model.Comments.OrderByDescending(p => p.Created))
-        {
-            @comment.Author
-            <br />
-            @comment.Body
-            <br />
-            @Html.ActionLink("View Comment", "ViewComment", new { id = comment.Id })
-            <hr />
-
-        }*@
         @if (User.Identity.IsAuthenticated)
         {
             using (Html.BeginForm("Create", "Comments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -254,19 +72,15 @@
                         @Html.TextArea("commentBody", new { @class = "form-control", placeholder = "Comment Body", rows = "4" })
                     </div>
                 </div>
-                @*<button class="btn btn-success" type="submit"></button>
-                <div class="form-group">
-                    @Html.Label("Add Comment", htmlAttributes: new { @class = "form-horizontal col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextArea("CommentBody", new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                </div>*@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Comment" class="btn btn-default" />
                     </div>
                 </div>
             }
+            <div>
+                @Html.ActionLink("Back To Blogs", "PublishedBlogs")
+            </div>
         }
     </div>
 

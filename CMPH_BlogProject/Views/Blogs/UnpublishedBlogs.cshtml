@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Unpublished";
 }
-
+<div class="row"><br /></div>
 <section id="projects" class="projects-section bg-light">
     <div class="container">
 
@@ -107,7 +107,13 @@
             if (item.MediaURL != null && item.Published == false)
             {
                 <img class="img-responsive" src="@item.MediaURL" alt="">
+                <hr />
+
             }
         }
     </div>
+    <div>
+        @Html.ActionLink("Back To Blogs", "PublishedBlogs")
+    </div>
+    <div />
 </section>

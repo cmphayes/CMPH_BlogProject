@@ -99,8 +99,9 @@ namespace CMPH_BlogProject.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(comment).State = EntityState.Modified;
+                comment.Updated = DateTimeOffset.Now;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("PublishedBlogs", "Blogs");
             }
             comment.Updated = DateTimeOffset.Now;
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
@@ -133,7 +134,7 @@ namespace CMPH_BlogProject.Controllers
             Comment comment = db.Comment.Find(id);
             db.Comment.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("PublishedBlogs", "Blogs");
         }
 
         protected override void Dispose(bool disposing)

@@ -8,6 +8,23 @@
         transition: background-color 0.3s ease-in-out;
     }
 
+    .box {
+        width: 100px;
+        height: 100px;
+    }
+
+    .red {
+        background: #f00;
+    }
+
+    .green {
+        background: #0f0;
+    }
+
+    .blue {
+        background: #00f;
+    }
+
         #mainNav .navbar-brand {
             padding: .5rem 0;
             color: black;

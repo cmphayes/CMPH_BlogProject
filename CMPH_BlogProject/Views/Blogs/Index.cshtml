@@ -11,7 +11,7 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<div class="row"><br /></div>
 <section id="projects" class="projects-section bg-light">
     <div class="container">
         <h2>Check Out Some Of My Blogs</h2>
@@ -114,6 +114,7 @@
             {
                 @Html.DisplayFor(modelItem => item.Title)
                 <img class="img-responsive" src="@item.MediaURL" alt="">
+                <hr />
 
             }
         }
@@ -122,5 +123,8 @@
     @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))*@
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }));
     @*This lets the search carry over to a new page*@
+    <div>
+        @Html.ActionLink("Back To Blogs", "PublishedBlogs")
+    </div>
 
 </section>

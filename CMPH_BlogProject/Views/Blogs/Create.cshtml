@@ -7,7 +7,7 @@
 
 <h2>Create</h2>
 
-
+<div class="row"><br /></div>
 @using (Html.BeginForm("Create", "Blogs", FormMethod.Post, new { enctype = "Multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -70,7 +70,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back To Blogs", "PublishedBlogs")
 </div>
 
 
