@@ -526,6 +526,12 @@ namespace CMPH_BlogProject.Controllers
             return RedirectToAction("ConfirmationSent");
         }
 
+        public ActionResult ConfimationSent()
+        {
+            return View();
+        }
+
+
         public ActionResult ConfirmationSent()
         {
             return View();

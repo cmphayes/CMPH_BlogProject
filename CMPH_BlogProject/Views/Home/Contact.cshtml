@@ -41,7 +41,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-success" value="Send" />
+                <button id="btnContact" class="btn-danger">Send</button>
             </div>
         </div>
     }
@@ -52,47 +52,12 @@
 </section>
 
 
-    @*<br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+@section scripts{
+    <script>
+        $('#btnContact').on('click', function () {
+            $('#contactForm').submit();
+        });
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 mb-3 mb-md-0">
-                <div class="card py-4 h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                        <h4 class="text-uppercase m-0">Address</h4>
-                        <hr class="my-4">
-                        <div class="small text-white-50">3700 Starhill Ct. Greensboro NC, USA 27410</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3 mb-md-0">
-                <div class="card py-4 h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-envelope text-primary mb-2"></i>
-                        <h4 class="text-uppercase m-0">Email</h4>
-                        <hr class="my-4">
-                        <div class="small text-white-50">
-                            <a href="#">cmphayes@gmail.com</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3 mb-md-0">
-                <div class="card py-4 h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                        <h4 class="text-uppercase m-0">Phone</h4>
-                        <hr class="my-4">
-                        <div class="small text-white-50">+1 336-457-2646</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>*@
+    </script>
+
+}

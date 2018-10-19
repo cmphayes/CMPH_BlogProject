@@ -1,59 +1,38 @@
 ﻿@using CMPH_BlogProject.Models
 @model LoginViewModel
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Page Title</title>
-    <style>
-        body {
-            background-color: powderblue;
-        }
-
-        h1 {
-            color: red;
-        }
-
-        p {
-            color: blue;
-        }
-    </style>
-</head>
-<body style='background:blue'>
-    <section id="projects" class="projects-section bg-light">
-        <style>
-            body {
-                background-color: powderblue;
-            }
-        </style>
-        <div class="container">
-            @{
-                ViewBag.Title = "Log in";
-            }
-
-            <h2>@ViewBag.Title.</h2>
-            <div class="row">
-                <div class="col-md-8">
-                    <section id="loginForm">
-                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                        {
+    <br/>
+<section>
+    <div class="row mt">
+        <div class="col-lg-12">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <div class="col-lg-8">
+                    <h4><i class="fa fa-angle-right"></i>Login</h4>
+                    <div class="form">
+                        <form class="cmxform form-horizontal style-form">
                             @Html.AntiForgeryToken()
-                            <h4>Use a local account to log in.</h4>
-                            <hr />
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <br>
+
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                                 <div class="col-md-10">
                                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <br>
+
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <div class="checkbox">
@@ -62,33 +41,58 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr />
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Log in" class="btn btn-default" />
+                                    <button type="submit" value="Log in" class="btn btn-round btn-success"><i class="fa fa-lock"></i> SIGN IN</button>
                                 </div>
                             </div>
+                        </form>
+                        <hr>
+                        <div class="login-social-link centered">
+                            <p>or you can sign in via your social network</p>
+                            <button class="btn btn-facebook" type="submit"><i class="fa fa-facebook"></i> Facebook</button>
+                            <button class="btn btn-twitter" type="submit"><i class="fa fa-twitter"></i> Twitter</button>
+                        </div>
+                        <div class="registration">
                             <p>
                                 @Html.ActionLink("Register as a new user", "Register")
                             </p>
                             <p>
                                 @Html.ActionLink("Forgot your password?", "ForgotPassword")
                             </p>
-                        }
-                    </section>
+                        </div>
+
+                    </div>
+                    <!-- Modal -->
+                    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Forgot Password ?</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Enter your e-mail address below to reset your password.</p>
+                                    <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                                    <button class="btn btn-theme" type="button">Submit</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <section id="socialLoginForm">
+                                        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <section id="socialLoginForm">
-                        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                    </section>
-                </div>
-            </div>
+            }
         </div>
-    </section>
-
-
-
-</body>
-</html>
+    </div>
+</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

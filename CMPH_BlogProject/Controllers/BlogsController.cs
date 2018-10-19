@@ -91,7 +91,8 @@ namespace CMPH_BlogProject.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult UnpublishedBlogs(int? page, string searchStr)
         {
-            ViewBag.Search = searchStr; var blogList = UnpublishedBlogsSearch(searchStr);
+            ViewBag.Search = searchStr;
+            var blogList = UnpublishedBlogsSearch(searchStr);
 
             int pageSize = 5;
             int pageNumber = (page ?? 1);

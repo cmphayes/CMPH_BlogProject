@@ -6,8 +6,6 @@ using System.Web;
 
 namespace CMPH_BlogProject.Models
 { 
-
-
     public class EmailModel
     {
         [Required, Display(Name = "Name")]

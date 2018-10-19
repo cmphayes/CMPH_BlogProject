@@ -39,21 +39,27 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     @*<li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href=@Url.Action("About","Home")>About</a>
-                    </li>*@
+            <a class="nav-link js-scroll-trigger" href=@Url.Action("About","Home")>About</a>
+        </li>*@
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href=@Url.Action("Contact", "Home")>Contact</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href=@Url.Action("Feature", "Blogs")>Content</a>
                     </li>
-                    @if (user)
+                    <li>
+                        <a class="nav-link js-scroll-trigger" href="https://cmphayes-portfolio.azurewebsites.net" target="_blank">Portfolio</a>
+                    </li>
+                    <li>
+                        <a class="nav-link js-scroll-trigger" href="https://cmphbugtracker.azurewebsites.net" target="_blank">Bug Tracker</a>
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
                             @Html.ActionLink("Log Out", "LogOff", "Account", null, new { @class = "nav-link js-scroll-trigger" })
                         </li>
                         <li class="nav-item">
-                            <div> @User.Identity.Name </div>
+                            <div class="nav-link js-scroll-trigger"> @User.Identity.Name </div>
                         </li>
                     }
                     else
@@ -62,8 +68,8 @@
                             <a class="nav-link js-scroll-trigger" href=@Url.Action("Login", "Account")>Login/Create Account</a>
                         </li>
                         @*<li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href=@Url.Action("Register", "Account")>Create Account</a>
-                        </li>*@
+                <a class="nav-link js-scroll-trigger" href=@Url.Action("Register", "Account")>Create Account</a>
+            </li>*@
                     }
                 </ul>
             </div>
