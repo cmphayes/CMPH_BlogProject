@@ -1,9 +1,16 @@
 ﻿@model IPagedList<CMPH_BlogProject.Models.Blog>
+@using CMPH_BlogProject.Helper
 @using PagedList.Mvc
 @using PagedList
 @{
     ViewBag.Title = "PublishedBlogs";
 }
+@*<style>
+    img {
+        width: 100%;
+        border: 1px solid #4caf50;
+    }
+</style>*@
 <div class="row"><br /></div>
 <section id="projects" class="projects-section bg-light">
     <div class="container">
@@ -44,20 +51,19 @@
                     <br />
                     if (item.MediaURL != null)
                     {
-                        <div style="height:42px;width:42px">
-                        @*@Html.DisplayFor(modelItem => item.MediaURL)*@
-                        <img class="img-responsive" src="@item.MediaURL" alt="">
+                        <div>
+                            <a href="@Url.Content(item.MediaURL)" target="_blank">@item.Title</a>
                         </div>
-                    }
+                        @*I want to add a feature that displays the image on the page below the blog info*@
+                        @*@Html.DisplayFor(modelItem => item.MediaURL)*@
+                        @*<img class="img-responsive" src="@item.MediaURL" alt="">*@
+                        @*<img src="@Url.Content(@BlogHelper.GetBlogImagePath(media.Id))" />*@
+                        }
+                    <br />
                     <br />
                     @Html.ActionLink("Details", "Details", new { slug = item.Slug })
                     @*@Html.ActionLink("View Comments", "Index", "Comments")*@
                     <br />
-                    if (User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { slug = item.Slug })
-                        @Html.ActionLink("Delete", "Delete", new { slug = item.Slug })
-                    }
                     <hr />
                 }
             }

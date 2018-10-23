@@ -398,6 +398,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\BlogHelper.cs" />
     <Compile Include="Helper\RandomGenerator.cs" />
     <Compile Include="Helper\StringUtilities.cs" />
     <Compile Include="ImageUploadValidator.cs" />
