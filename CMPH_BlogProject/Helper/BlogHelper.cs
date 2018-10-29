@@ -25,5 +25,42 @@ namespace CMPH_BlogProject.Helper
 
             return blogImagePath;
         }
+
+        //Im going to change this to a switch statement
+        public static string GetUploadIcon(int blogId)
+        {
+            var defaultIcon = "/img/if_url_65946.png";
+            var blogAttachmentPath = db.Blog.Find(blogId).MediaURL;
+
+            string fileExt = System.IO.Path.GetExtension(blogAttachmentPath);
+
+            if (fileExt == ".jpeg")
+            {
+                return "/img/if_jpeg_65908.png";
+            }
+            else if (fileExt == ".pdf")
+            {
+                return "/img/if_pdf_65920.png";
+            }
+            else if (fileExt == ".doc")
+            {
+                return "/img/if_docx_win_65892.png";
+            }
+            else if (fileExt == ".png")
+            {
+                return "/img/if_png_65922.png";
+            }
+            else if (fileExt == ".rar")
+            {
+                return "/img/if_rar_65936.png";
+            }
+            else
+            {
+                return defaultIcon;
+            }
+        }
+
+
+
     }
 }

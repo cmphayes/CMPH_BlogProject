@@ -440,6 +440,15 @@
     <Content Include="img\GuysTruckCows.jpeg" />
     <Content Include="img\HararaGovtBuilding.jpeg" />
     <Content Include="img\HouseCarNoTiresSA.jpeg" />
+    <Content Include="img\if_docx_mac_65890.png" />
+    <Content Include="img\if_docx_win_65892.png" />
+    <Content Include="img\if_jpeg_65908.png" />
+    <Content Include="img\if_pdf_65920.png" />
+    <Content Include="img\if_png_65922.png" />
+    <Content Include="img\if_rar_65936.png" />
+    <Content Include="img\if_readme_65938.png" />
+    <Content Include="img\if_url_65946.png" />
+    <Content Include="img\if_zip_65960.png" />
     <Content Include="img\KidsWashingClothes.jpeg" />
     <Content Include="img\KuntaKintaFerry.jpeg" />
     <Content Include="img\LethsotoGuyDonkey.jpeg" />
@@ -482,6 +491,8 @@
     <None Include="Properties\PublishProfiles\CMPHBlogProject - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Conall%27sBlog - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ConallsBlog - Web Deploy.pubxml" />
+    <Content Include="Scripts\build.log" />
+    <Content Include="Scripts\bower.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -492,7 +503,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\LICENSE.txt" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\polymer-micro.html" />
+    <Content Include="Scripts\polymer-mini.html" />
+    <Content Include="Scripts\polymer.html" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\license.txt" />
     <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />

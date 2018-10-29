@@ -79,8 +79,11 @@
     <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            tinymce.init({
-                selector: '#Body'
+            tinymce.init
+            ({
+                    selector: '#Body',
+                    plugins: 'codesample',
+                    toolbar: 'codesample'
             });
         });
     </script>
